@@ -1,0 +1,3 @@
+/home/cristi/Desktop/projects/economie-cli/server/build/CMakeFiles/edit_cache.dir
+/home/cristi/Desktop/projects/economie-cli/server/build/CMakeFiles/rebuild_cache.dir
+/home/cristi/Desktop/projects/economie-cli/server/build/CMakeFiles/test-parser.dir

@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/test-parser.dir/main.cpp.o CMakeFiles/test-parser.dir/dataparser.cpp.o CMakeFiles/test-parser.dir/date.cpp.o CMakeFiles/test-parser.dir/datatypes.grpc.pb.cc.o CMakeFiles/test-parser.dir/datatypes.pb.cc.o  -o test-parser -rdynamic /usr/local/lib/libprotobuf.so -Wl,-rpath,/usr/local/lib 

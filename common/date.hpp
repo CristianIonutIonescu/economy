@@ -1,6 +1,8 @@
 #ifndef DATE_HPP
 #define DATE_HPP
 
+#include "datatypes.pb.h"
+
 #include <string>
 #include <vector>
 
@@ -14,6 +16,8 @@ public:
   Date(int day, int month, int year) : day_(day), month_(month), year_(year) {}
 
   Date(const std::string &date, const std::string &format = "DD-MM-YYYY") { FromString(date, format); }
+
+  Date(const ProtoDate &date) { FromProtoDate(date); }
 
   Date(const Date &rhs) : day_(rhs.day_), month_(rhs.month_), year_(rhs.year_) {}
 
@@ -40,8 +44,14 @@ public:
   bool operator>=(const Date &rhs) const;
   bool operator<=(const Date &rhs) const;
 
+  int GetDay() const { return day_; }
+  int GetMOnth() const { return month_; }
+  int GetYear() const { return year_; }
+
   std::string ToString(const std::string &format = "DD-MM-YYYY") const;
+  ProtoDate ToProtoDate() const;
   void FromString(const std::string &date, const std::string &format = "DD-MM-YYYY");
+  void FromProtoDate(const ProtoDate &date);
 
 private:
   const std::vector<std::string> date_formats{

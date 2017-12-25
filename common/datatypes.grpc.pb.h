@@ -34,14 +34,12 @@ class TransportService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    std::unique_ptr< ::grpc::ClientReaderInterface< ::economy::DataReply>> GetData(::grpc::ClientContext* context, const ::economy::DataRequest& request) {
-      return std::unique_ptr< ::grpc::ClientReaderInterface< ::economy::DataReply>>(GetDataRaw(context, request));
+    virtual ::grpc::Status GetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::economy::DataReply* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::economy::DataReply>> AsyncGetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::economy::DataReply>>(AsyncGetDataRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::economy::DataReply>> AsyncGetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::economy::DataReply>>(AsyncGetDataRaw(context, request, cq, tag));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::economy::DataReply>> PrepareAsyncGetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::economy::DataReply>>(PrepareAsyncGetDataRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::economy::DataReply>> PrepareAsyncGetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::economy::DataReply>>(PrepareAsyncGetDataRaw(context, request, cq));
     }
     virtual ::grpc::Status ChangeCurrency(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::economy::CurrencyReply* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::economy::CurrencyReply>> AsyncChangeCurrency(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::grpc::CompletionQueue* cq) {
@@ -51,23 +49,20 @@ class TransportService final {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::economy::CurrencyReply>>(PrepareAsyncChangeCurrencyRaw(context, request, cq));
     }
   private:
-    virtual ::grpc::ClientReaderInterface< ::economy::DataReply>* GetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request) = 0;
-    virtual ::grpc::ClientAsyncReaderInterface< ::economy::DataReply>* AsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderInterface< ::economy::DataReply>* PrepareAsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::economy::DataReply>* AsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::economy::DataReply>* PrepareAsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::economy::CurrencyReply>* AsyncChangeCurrencyRaw(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::economy::CurrencyReply>* PrepareAsyncChangeCurrencyRaw(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel);
-    std::unique_ptr< ::grpc::ClientReader< ::economy::DataReply>> GetData(::grpc::ClientContext* context, const ::economy::DataRequest& request) {
-      return std::unique_ptr< ::grpc::ClientReader< ::economy::DataReply>>(GetDataRaw(context, request));
+    ::grpc::Status GetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::economy::DataReply* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::economy::DataReply>> AsyncGetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::economy::DataReply>>(AsyncGetDataRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReader< ::economy::DataReply>> AsyncGetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReader< ::economy::DataReply>>(AsyncGetDataRaw(context, request, cq, tag));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncReader< ::economy::DataReply>> PrepareAsyncGetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReader< ::economy::DataReply>>(PrepareAsyncGetDataRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::economy::DataReply>> PrepareAsyncGetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::economy::DataReply>>(PrepareAsyncGetDataRaw(context, request, cq));
     }
     ::grpc::Status ChangeCurrency(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::economy::CurrencyReply* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::economy::CurrencyReply>> AsyncChangeCurrency(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::grpc::CompletionQueue* cq) {
@@ -79,9 +74,8 @@ class TransportService final {
 
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
-    ::grpc::ClientReader< ::economy::DataReply>* GetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request) override;
-    ::grpc::ClientAsyncReader< ::economy::DataReply>* AsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReader< ::economy::DataReply>* PrepareAsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::economy::DataReply>* AsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::economy::DataReply>* PrepareAsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::economy::CurrencyReply>* AsyncChangeCurrencyRaw(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::economy::CurrencyReply>* PrepareAsyncChangeCurrencyRaw(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::RpcMethod rpcmethod_GetData_;
@@ -93,7 +87,7 @@ class TransportService final {
    public:
     Service();
     virtual ~Service();
-    virtual ::grpc::Status GetData(::grpc::ServerContext* context, const ::economy::DataRequest* request, ::grpc::ServerWriter< ::economy::DataReply>* writer);
+    virtual ::grpc::Status GetData(::grpc::ServerContext* context, const ::economy::DataRequest* request, ::economy::DataReply* response);
     virtual ::grpc::Status ChangeCurrency(::grpc::ServerContext* context, const ::economy::CurrencyRequest* request, ::economy::CurrencyReply* response);
   };
   template <class BaseClass>
@@ -108,12 +102,12 @@ class TransportService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetData(::grpc::ServerContext* context, const ::economy::DataRequest* request, ::grpc::ServerWriter< ::economy::DataReply>* writer) final override {
+    ::grpc::Status GetData(::grpc::ServerContext* context, const ::economy::DataRequest* request, ::economy::DataReply* response) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestGetData(::grpc::ServerContext* context, ::economy::DataRequest* request, ::grpc::ServerAsyncWriter< ::economy::DataReply>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(0, context, request, writer, new_call_cq, notification_cq, tag);
+    void RequestGetData(::grpc::ServerContext* context, ::economy::DataRequest* request, ::grpc::ServerAsyncResponseWriter< ::economy::DataReply>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -149,7 +143,7 @@ class TransportService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetData(::grpc::ServerContext* context, const ::economy::DataRequest* request, ::grpc::ServerWriter< ::economy::DataReply>* writer) final override {
+    ::grpc::Status GetData(::grpc::ServerContext* context, const ::economy::DataRequest* request, ::economy::DataReply* response) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -172,6 +166,26 @@ class TransportService final {
     }
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_GetData : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service *service) {}
+   public:
+    WithStreamedUnaryMethod_GetData() {
+      ::grpc::Service::MarkMethodStreamed(0,
+        new ::grpc::StreamedUnaryHandler< ::economy::DataRequest, ::economy::DataReply>(std::bind(&WithStreamedUnaryMethod_GetData<BaseClass>::StreamedGetData, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_GetData() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetData(::grpc::ServerContext* context, const ::economy::DataRequest* request, ::economy::DataReply* response) final override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetData(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::economy::DataRequest,::economy::DataReply>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_ChangeCurrency : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service *service) {}
@@ -191,29 +205,9 @@ class TransportService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedChangeCurrency(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::economy::CurrencyRequest,::economy::CurrencyReply>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_ChangeCurrency<Service > StreamedUnaryService;
-  template <class BaseClass>
-  class WithSplitStreamingMethod_GetData : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service *service) {}
-   public:
-    WithSplitStreamingMethod_GetData() {
-      ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::SplitServerStreamingHandler< ::economy::DataRequest, ::economy::DataReply>(std::bind(&WithSplitStreamingMethod_GetData<BaseClass>::StreamedGetData, this, std::placeholders::_1, std::placeholders::_2)));
-    }
-    ~WithSplitStreamingMethod_GetData() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable regular version of this method
-    ::grpc::Status GetData(::grpc::ServerContext* context, const ::economy::DataRequest* request, ::grpc::ServerWriter< ::economy::DataReply>* writer) final override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    // replace default version of method with split streamed
-    virtual ::grpc::Status StreamedGetData(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::economy::DataRequest,::economy::DataReply>* server_split_streamer) = 0;
-  };
-  typedef WithSplitStreamingMethod_GetData<Service > SplitStreamedService;
-  typedef WithSplitStreamingMethod_GetData<WithStreamedUnaryMethod_ChangeCurrency<Service > > StreamedService;
+  typedef WithStreamedUnaryMethod_GetData<WithStreamedUnaryMethod_ChangeCurrency<Service > > StreamedUnaryService;
+  typedef Service SplitStreamedService;
+  typedef WithStreamedUnaryMethod_GetData<WithStreamedUnaryMethod_ChangeCurrency<Service > > StreamedService;
 };
 
 }  // namespace economy

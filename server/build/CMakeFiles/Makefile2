@@ -54,45 +54,45 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cristi/Desktop/projects/economie-cli/server
+CMAKE_SOURCE_DIR = /home/cristi/Desktop/projects/economy-cli/src/server
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cristi/Desktop/projects/economie-cli/server/build
+CMAKE_BINARY_DIR = /home/cristi/Desktop/projects/economy-cli/src/server/build
 
 #=============================================================================
-# Target rules for target CMakeFiles/test-parser.dir
+# Target rules for target CMakeFiles/server.dir
 
 # All Build rule for target.
-CMakeFiles/test-parser.dir/all:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/depend
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cristi/Desktop/projects/economie-cli/server/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target test-parser"
-.PHONY : CMakeFiles/test-parser.dir/all
+CMakeFiles/server.dir/all:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/depend
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cristi/Desktop/projects/economy-cli/src/server/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target server"
+.PHONY : CMakeFiles/server.dir/all
 
 # Include target in all.
-all: CMakeFiles/test-parser.dir/all
+all: CMakeFiles/server.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/test-parser.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cristi/Desktop/projects/economie-cli/server/build/CMakeFiles 6
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test-parser.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cristi/Desktop/projects/economie-cli/server/build/CMakeFiles 0
-.PHONY : CMakeFiles/test-parser.dir/rule
+CMakeFiles/server.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cristi/Desktop/projects/economy-cli/src/server/build/CMakeFiles 8
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/server.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cristi/Desktop/projects/economy-cli/src/server/build/CMakeFiles 0
+.PHONY : CMakeFiles/server.dir/rule
 
 # Convenience name for target.
-test-parser: CMakeFiles/test-parser.dir/rule
+server: CMakeFiles/server.dir/rule
 
-.PHONY : test-parser
-
-# clean rule for target.
-CMakeFiles/test-parser.dir/clean:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/clean
-.PHONY : CMakeFiles/test-parser.dir/clean
+.PHONY : server
 
 # clean rule for target.
-clean: CMakeFiles/test-parser.dir/clean
+CMakeFiles/server.dir/clean:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/clean
+.PHONY : CMakeFiles/server.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/server.dir/clean
 
 .PHONY : clean
 

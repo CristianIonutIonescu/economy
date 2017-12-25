@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for i in "$@"
+do
+echo "Generating protocol classes for $i..."
+protoc --cpp_out=./../common/ $i
+done
+
+

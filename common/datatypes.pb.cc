@@ -276,14 +276,14 @@ void AddDescriptorsImpl() {
       "\":\n\017CurrencyRequest\022\'\n\014new_currency\030\001 \001("
       "\0162\021.economy.Currency\"(\n\rCurrencyReply\022\027\n"
       "\017conversion_rate\030\001 \001(\001*%\n\010Currency\022\007\n\003RO"
-      "N\020\000\022\007\n\003EUR\020\001\022\007\n\003USD\020\0022\221\001\n\020TransportServi"
-      "ce\0227\n\007GetData\022\024.economy.DataRequest\032\022.ec"
-      "onomy.DataReply\"\0000\001\022D\n\016ChangeCurrency\022\030."
-      "economy.CurrencyRequest\032\026.economy.Curren"
-      "cyReply\"\000b\006proto3"
+      "N\020\000\022\007\n\003EUR\020\001\022\007\n\003USD\020\0022\217\001\n\020TransportServi"
+      "ce\0225\n\007GetData\022\024.economy.DataRequest\032\022.ec"
+      "onomy.DataReply\"\000\022D\n\016ChangeCurrency\022\030.ec"
+      "onomy.CurrencyRequest\032\026.economy.Currency"
+      "Reply\"\000b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 577);
+      descriptor, 575);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "datatypes.proto", &protobuf_RegisterTypes);
 }

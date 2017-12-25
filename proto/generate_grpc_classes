@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for i in "$@"
+do
+echo "Generating grpc classes for $i..."
+protoc --grpc_out=./../common/ --plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin $i
+done
+
+

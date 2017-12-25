@@ -38,6 +38,6 @@ message CurrencyReply {
 
 
 service TransportService {
-    rpc GetData(DataRequest) returns (stream DataReply) {}
+    rpc GetData(DataRequest) returns (DataReply) {}
     rpc ChangeCurrency(CurrencyRequest) returns (CurrencyReply) {}
 }

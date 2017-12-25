@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cristi/Desktop/projects/economie-cli/server
+CMAKE_SOURCE_DIR = /home/cristi/Desktop/projects/economy-cli/src/server
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cristi/Desktop/projects/economie-cli/server/build
+CMAKE_BINARY_DIR = /home/cristi/Desktop/projects/economy-cli/src/server/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cristi/Desktop/projects/economie-cli/server/build/CMakeFiles /home/cristi/Desktop/projects/economie-cli/server/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cristi/Desktop/projects/economy-cli/src/server/build/CMakeFiles /home/cristi/Desktop/projects/economy-cli/src/server/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cristi/Desktop/projects/economie-cli/server/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cristi/Desktop/projects/economy-cli/src/server/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test-parser
+# Target rules for targets named server
 
 # Build rule for target.
-test-parser: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test-parser
-.PHONY : test-parser
+server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server
+.PHONY : server
 
 # fast build rule for target.
-test-parser/fast:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/build
-.PHONY : test-parser/fast
+server/fast:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
+.PHONY : server/fast
+
+application.o: application.cpp.o
+
+.PHONY : application.o
+
+# target to build an object file
+application.cpp.o:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/application.cpp.o
+.PHONY : application.cpp.o
+
+application.i: application.cpp.i
+
+.PHONY : application.i
+
+# target to preprocess a source file
+application.cpp.i:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/application.cpp.i
+.PHONY : application.cpp.i
+
+application.s: application.cpp.s
+
+.PHONY : application.s
+
+# target to generate assembly for a file
+application.cpp.s:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/application.cpp.s
+.PHONY : application.cpp.s
 
 dataparser.o: dataparser.cpp.o
 
@@ -129,7 +156,7 @@ dataparser.o: dataparser.cpp.o
 
 # target to build an object file
 dataparser.cpp.o:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/dataparser.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/dataparser.cpp.o
 .PHONY : dataparser.cpp.o
 
 dataparser.i: dataparser.cpp.i
@@ -138,7 +165,7 @@ dataparser.i: dataparser.cpp.i
 
 # target to preprocess a source file
 dataparser.cpp.i:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/dataparser.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/dataparser.cpp.i
 .PHONY : dataparser.cpp.i
 
 dataparser.s: dataparser.cpp.s
@@ -147,89 +174,89 @@ dataparser.s: dataparser.cpp.s
 
 # target to generate assembly for a file
 dataparser.cpp.s:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/dataparser.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/dataparser.cpp.s
 .PHONY : dataparser.cpp.s
 
-datatypes.grpc.pb.o: datatypes.grpc.pb.cc.o
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.o: home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.o
 
-.PHONY : datatypes.grpc.pb.o
-
-# target to build an object file
-datatypes.grpc.pb.cc.o:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/datatypes.grpc.pb.cc.o
-.PHONY : datatypes.grpc.pb.cc.o
-
-datatypes.grpc.pb.i: datatypes.grpc.pb.cc.i
-
-.PHONY : datatypes.grpc.pb.i
-
-# target to preprocess a source file
-datatypes.grpc.pb.cc.i:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/datatypes.grpc.pb.cc.i
-.PHONY : datatypes.grpc.pb.cc.i
-
-datatypes.grpc.pb.s: datatypes.grpc.pb.cc.s
-
-.PHONY : datatypes.grpc.pb.s
-
-# target to generate assembly for a file
-datatypes.grpc.pb.cc.s:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/datatypes.grpc.pb.cc.s
-.PHONY : datatypes.grpc.pb.cc.s
-
-datatypes.pb.o: datatypes.pb.cc.o
-
-.PHONY : datatypes.pb.o
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.o
 
 # target to build an object file
-datatypes.pb.cc.o:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/datatypes.pb.cc.o
-.PHONY : datatypes.pb.cc.o
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.o:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.o
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.o
 
-datatypes.pb.i: datatypes.pb.cc.i
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.i: home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.i
 
-.PHONY : datatypes.pb.i
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.i
 
 # target to preprocess a source file
-datatypes.pb.cc.i:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/datatypes.pb.cc.i
-.PHONY : datatypes.pb.cc.i
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.i:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.i
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.i
 
-datatypes.pb.s: datatypes.pb.cc.s
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.s: home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.s
 
-.PHONY : datatypes.pb.s
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.s
 
 # target to generate assembly for a file
-datatypes.pb.cc.s:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/datatypes.pb.cc.s
-.PHONY : datatypes.pb.cc.s
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.s:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.s
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.cc.s
 
-date.o: date.cpp.o
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.o: home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.o
 
-.PHONY : date.o
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.o
 
 # target to build an object file
-date.cpp.o:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/date.cpp.o
-.PHONY : date.cpp.o
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.o:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.o
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.o
 
-date.i: date.cpp.i
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.i: home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.i
 
-.PHONY : date.i
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.i
 
 # target to preprocess a source file
-date.cpp.i:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/date.cpp.i
-.PHONY : date.cpp.i
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.i:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.i
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.i
 
-date.s: date.cpp.s
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.s: home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.s
 
-.PHONY : date.s
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.s
 
 # target to generate assembly for a file
-date.cpp.s:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/date.cpp.s
-.PHONY : date.cpp.s
+home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.s:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.s
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.cc.s
+
+home/cristi/Desktop/projects/economy-cli/src/common/date.o: home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.o
+
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/date.o
+
+# target to build an object file
+home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.o:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.o
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.o
+
+home/cristi/Desktop/projects/economy-cli/src/common/date.i: home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.i
+
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/date.i
+
+# target to preprocess a source file
+home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.i:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.i
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.i
+
+home/cristi/Desktop/projects/economy-cli/src/common/date.s: home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.s
+
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/date.s
+
+# target to generate assembly for a file
+home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.s:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.s
+.PHONY : home/cristi/Desktop/projects/economy-cli/src/common/date.cpp.s
 
 main.o: main.cpp.o
 
@@ -237,7 +264,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -246,7 +273,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -255,8 +282,35 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/test-parser.dir/build.make CMakeFiles/test-parser.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+transportservice.o: transportservice.cpp.o
+
+.PHONY : transportservice.o
+
+# target to build an object file
+transportservice.cpp.o:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/transportservice.cpp.o
+.PHONY : transportservice.cpp.o
+
+transportservice.i: transportservice.cpp.i
+
+.PHONY : transportservice.i
+
+# target to preprocess a source file
+transportservice.cpp.i:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/transportservice.cpp.i
+.PHONY : transportservice.cpp.i
+
+transportservice.s: transportservice.cpp.s
+
+.PHONY : transportservice.s
+
+# target to generate assembly for a file
+transportservice.cpp.s:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/transportservice.cpp.s
+.PHONY : transportservice.cpp.s
 
 # Help Target
 help:
@@ -266,22 +320,28 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test-parser"
+	@echo "... server"
+	@echo "... application.o"
+	@echo "... application.i"
+	@echo "... application.s"
 	@echo "... dataparser.o"
 	@echo "... dataparser.i"
 	@echo "... dataparser.s"
-	@echo "... datatypes.grpc.pb.o"
-	@echo "... datatypes.grpc.pb.i"
-	@echo "... datatypes.grpc.pb.s"
-	@echo "... datatypes.pb.o"
-	@echo "... datatypes.pb.i"
-	@echo "... datatypes.pb.s"
-	@echo "... date.o"
-	@echo "... date.i"
-	@echo "... date.s"
+	@echo "... home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.o"
+	@echo "... home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.i"
+	@echo "... home/cristi/Desktop/projects/economy-cli/src/common/datatypes.grpc.pb.s"
+	@echo "... home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.o"
+	@echo "... home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.i"
+	@echo "... home/cristi/Desktop/projects/economy-cli/src/common/datatypes.pb.s"
+	@echo "... home/cristi/Desktop/projects/economy-cli/src/common/date.o"
+	@echo "... home/cristi/Desktop/projects/economy-cli/src/common/date.i"
+	@echo "... home/cristi/Desktop/projects/economy-cli/src/common/date.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... transportservice.o"
+	@echo "... transportservice.i"
+	@echo "... transportservice.s"
 .PHONY : help
 
 

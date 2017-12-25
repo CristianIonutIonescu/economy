@@ -1,15 +1,14 @@
-#include "dateparser.hpp"
-#include "transportservice.hpp"
 #include <iostream>
+#include "application.hpp"
 
-int main() {
-    economy::server::DataParser parser;
-    parser.Init("../data.csv");
-    parser.Print();
-    auto period = parser.GetRange(economy::Date(11,11,2017), economy::Date(13,11,2017));
-    std::cout<<period.size()<<std::endl;
-    for(const auto &it: period) {
-        std::cout<<it.first.ToString()<<"-"<<it.second<<std::endl;
+int main(int argc ,char **argv) {
+    try {
+        economy::server::Application app(argc, argv);
+        app.Run();
+    }catch(const std::runtime_error  &ex) {
+        std::cerr<<ex.what();
+        return 1;
     }
+    
     return 0;
 }

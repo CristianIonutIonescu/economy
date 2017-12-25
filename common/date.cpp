@@ -119,4 +119,19 @@ bool Date::operator<=(const Date &rhs) const
 {
     return (*this < rhs) || (*this == rhs);
 }
+
+ProtoDate Date::ToProtoDate() const {
+    ProtoDate proto_date;
+    proto_date.set_day(day_);
+    proto_date.set_month(month_);
+    proto_date.set_year(year_);
+    return proto_date;
+}
+
+void Date::FromProtoDate(const ProtoDate &date)
+{
+    day_ = date.day();
+    month_ = date.month();
+    year_ = date.year();
+}
 }

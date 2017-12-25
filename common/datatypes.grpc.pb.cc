@@ -26,20 +26,20 @@ std::unique_ptr< TransportService::Stub> TransportService::NewStub(const std::sh
 }
 
 TransportService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel)
-  : channel_(channel), rpcmethod_GetData_(TransportService_method_names[0], ::grpc::RpcMethod::SERVER_STREAMING, channel)
+  : channel_(channel), rpcmethod_GetData_(TransportService_method_names[0], ::grpc::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ChangeCurrency_(TransportService_method_names[1], ::grpc::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::ClientReader< ::economy::DataReply>* TransportService::Stub::GetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request) {
-  return new ::grpc::ClientReader< ::economy::DataReply>(channel_.get(), rpcmethod_GetData_, context, request);
+::grpc::Status TransportService::Stub::GetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::economy::DataReply* response) {
+  return ::grpc::BlockingUnaryCall(channel_.get(), rpcmethod_GetData_, context, request, response);
 }
 
-::grpc::ClientAsyncReader< ::economy::DataReply>* TransportService::Stub::AsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::ClientAsyncReader< ::economy::DataReply>::Create(channel_.get(), cq, rpcmethod_GetData_, context, request, true, tag);
+::grpc::ClientAsyncResponseReader< ::economy::DataReply>* TransportService::Stub::AsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::ClientAsyncResponseReader< ::economy::DataReply>::Create(channel_.get(), cq, rpcmethod_GetData_, context, request, true);
 }
 
-::grpc::ClientAsyncReader< ::economy::DataReply>* TransportService::Stub::PrepareAsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::ClientAsyncReader< ::economy::DataReply>::Create(channel_.get(), cq, rpcmethod_GetData_, context, request, false, nullptr);
+::grpc::ClientAsyncResponseReader< ::economy::DataReply>* TransportService::Stub::PrepareAsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::ClientAsyncResponseReader< ::economy::DataReply>::Create(channel_.get(), cq, rpcmethod_GetData_, context, request, false);
 }
 
 ::grpc::Status TransportService::Stub::ChangeCurrency(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::economy::CurrencyReply* response) {
@@ -57,8 +57,8 @@ TransportService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& c
 TransportService::Service::Service() {
   AddMethod(new ::grpc::RpcServiceMethod(
       TransportService_method_names[0],
-      ::grpc::RpcMethod::SERVER_STREAMING,
-      new ::grpc::ServerStreamingHandler< TransportService::Service, ::economy::DataRequest, ::economy::DataReply>(
+      ::grpc::RpcMethod::NORMAL_RPC,
+      new ::grpc::RpcMethodHandler< TransportService::Service, ::economy::DataRequest, ::economy::DataReply>(
           std::mem_fn(&TransportService::Service::GetData), this)));
   AddMethod(new ::grpc::RpcServiceMethod(
       TransportService_method_names[1],
@@ -70,10 +70,10 @@ TransportService::Service::Service() {
 TransportService::Service::~Service() {
 }
 
-::grpc::Status TransportService::Service::GetData(::grpc::ServerContext* context, const ::economy::DataRequest* request, ::grpc::ServerWriter< ::economy::DataReply>* writer) {
+::grpc::Status TransportService::Service::GetData(::grpc::ServerContext* context, const ::economy::DataRequest* request, ::economy::DataReply* response) {
   (void) context;
   (void) request;
-  (void) writer;
+  (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 

@@ -1,24 +1,21 @@
 #include <iostream>
 #include "dataretriever.hpp"
+#include "datapresenter.hpp"
 
 using namespace economy;
 using namespace economy::client;
+QT_CHARTS_USE_NAMESPACE
 
 int main(int argc ,char **argv) {
+    QApplication a(argc, argv);
     DataRetriever test("localhost:8080");
-    Date beg("12-10-2017");
-    Date end("12-12-2017");
+    Presenter viewer(&test);
+    QChartView *chartView = viewer.Run();
+    QMainWindow window;
+    window.setCentralWidget(chartView);
+    window.resize(820, 600);
+    window.show();
 
-    try {
-        auto data = test.GetData(beg,end);
+    return a.exec();
 
-        for(const auto it: data) {
-            std::cout<<it.first.ToString()<<":"<<it.second<<std::endl;
-        }
-    }catch(const std::exception &ex) {
-        std::cerr<<ex.what()<<std::endl;
-        return 1;
-    }
-
-    return 0;
 }

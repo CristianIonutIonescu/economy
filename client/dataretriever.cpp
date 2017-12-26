@@ -19,13 +19,11 @@ std::vector<std::pair<Date, float>> DataRetriever::GetData(const Date &begin, co
     ProtoDate proto_end = end.ToProtoDate();
     DataRequest request;
 
-    std::cout<<"preparing request"<<std::endl;
     request.mutable_begin()->CopyFrom(proto_beg);
     request.mutable_end()->CopyFrom(proto_end);
 
     grpc::ClientContext context;
 
-    std::cout<<"preparing reply"<<std::endl;
     DataReply reply;
     grpc::Status status = stub_->GetData(&context, request, &reply);
     std::vector<std::pair<Date, float>> data;
@@ -37,16 +35,10 @@ std::vector<std::pair<Date, float>> DataRetriever::GetData(const Date &begin, co
         data.push_back(std::make_pair(date,value));
     }
 
-    for(const auto it: data) {
-        std::cout<<it.first.ToString() << " , " << it.second<<std::endl;
-    }
-
     if(!status.ok()) {
         std::cerr<<status.error_code()<<std::endl;
         throw std::runtime_error(status.error_message());
     }
-
-    std::cout<<"preparing reply 3"<<std::endl;
     return data;
 }
 

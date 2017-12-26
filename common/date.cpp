@@ -1,6 +1,7 @@
 #include "date.hpp"
 
 #include <algorithm>
+#include <ctime>
 #include <regex>
 #include <stdexcept>
 
@@ -18,13 +19,13 @@ std::string Date::ToString(const std::string &format) const
     std::string sday = std::to_string(day_);
     if (day_ < 10)
     {
-        sday += "0";
+        sday = "0" + sday;
     }
 
     std::string smonth = std::to_string(month_);
     if (month_ < 10)
     {
-        smonth += "0";
+        smonth = "0" + smonth;
     }
 
     sdate = sdate.replace(sdate.find("DD"), 2, sday);
@@ -133,5 +134,14 @@ void Date::FromProtoDate(const ProtoDate &date)
     day_ = date.day();
     month_ = date.month();
     year_ = date.year();
+}
+
+uint64_t Date::SecsSinceEpoch() const
+{
+    std::tm tmTime;
+    std::string str_time = this->ToString();
+    memset(&tmTime, 0, sizeof(tmTime));
+    strptime(str_time.c_str(), "%d-%m-%Y", &tmTime);
+    return (uint64_t)mktime(&tmTime);
 }
 }

@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+
 namespace economy
 {
 class Date
@@ -45,13 +46,14 @@ public:
   bool operator<=(const Date &rhs) const;
 
   int GetDay() const { return day_; }
-  int GetMOnth() const { return month_; }
+  int GetMonth() const { return month_; }
   int GetYear() const { return year_; }
 
   std::string ToString(const std::string &format = "DD-MM-YYYY") const;
   ProtoDate ToProtoDate() const;
   void FromString(const std::string &date, const std::string &format = "DD-MM-YYYY");
   void FromProtoDate(const ProtoDate &date);
+  uint64_t SecsSinceEpoch() const;
 
 private:
   const std::vector<std::string> date_formats{

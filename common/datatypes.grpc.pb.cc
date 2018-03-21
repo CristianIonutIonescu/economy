@@ -5,14 +5,14 @@
 #include "datatypes.pb.h"
 #include "datatypes.grpc.pb.h"
 
-#include <grpc++/impl/codegen/async_stream.h>
-#include <grpc++/impl/codegen/async_unary_call.h>
-#include <grpc++/impl/codegen/channel_interface.h>
-#include <grpc++/impl/codegen/client_unary_call.h>
-#include <grpc++/impl/codegen/method_handler_impl.h>
-#include <grpc++/impl/codegen/rpc_service_method.h>
-#include <grpc++/impl/codegen/service_type.h>
-#include <grpc++/impl/codegen/sync_stream.h>
+#include <grpcpp/impl/codegen/async_stream.h>
+#include <grpcpp/impl/codegen/async_unary_call.h>
+#include <grpcpp/impl/codegen/channel_interface.h>
+#include <grpcpp/impl/codegen/client_unary_call.h>
+#include <grpcpp/impl/codegen/method_handler_impl.h>
+#include <grpcpp/impl/codegen/rpc_service_method.h>
+#include <grpcpp/impl/codegen/service_type.h>
+#include <grpcpp/impl/codegen/sync_stream.h>
 namespace economy {
 
 static const char* TransportService_method_names[] = {
@@ -21,49 +21,50 @@ static const char* TransportService_method_names[] = {
 };
 
 std::unique_ptr< TransportService::Stub> TransportService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
+  (void)options;
   std::unique_ptr< TransportService::Stub> stub(new TransportService::Stub(channel));
   return stub;
 }
 
 TransportService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel)
-  : channel_(channel), rpcmethod_GetData_(TransportService_method_names[0], ::grpc::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ChangeCurrency_(TransportService_method_names[1], ::grpc::RpcMethod::NORMAL_RPC, channel)
+  : channel_(channel), rpcmethod_GetData_(TransportService_method_names[0], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ChangeCurrency_(TransportService_method_names[1], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status TransportService::Stub::GetData(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::economy::DataReply* response) {
-  return ::grpc::BlockingUnaryCall(channel_.get(), rpcmethod_GetData_, context, request, response);
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_GetData_, context, request, response);
 }
 
 ::grpc::ClientAsyncResponseReader< ::economy::DataReply>* TransportService::Stub::AsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::ClientAsyncResponseReader< ::economy::DataReply>::Create(channel_.get(), cq, rpcmethod_GetData_, context, request, true);
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::economy::DataReply>::Create(channel_.get(), cq, rpcmethod_GetData_, context, request, true);
 }
 
 ::grpc::ClientAsyncResponseReader< ::economy::DataReply>* TransportService::Stub::PrepareAsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::ClientAsyncResponseReader< ::economy::DataReply>::Create(channel_.get(), cq, rpcmethod_GetData_, context, request, false);
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::economy::DataReply>::Create(channel_.get(), cq, rpcmethod_GetData_, context, request, false);
 }
 
 ::grpc::Status TransportService::Stub::ChangeCurrency(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::economy::CurrencyReply* response) {
-  return ::grpc::BlockingUnaryCall(channel_.get(), rpcmethod_ChangeCurrency_, context, request, response);
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_ChangeCurrency_, context, request, response);
 }
 
 ::grpc::ClientAsyncResponseReader< ::economy::CurrencyReply>* TransportService::Stub::AsyncChangeCurrencyRaw(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::ClientAsyncResponseReader< ::economy::CurrencyReply>::Create(channel_.get(), cq, rpcmethod_ChangeCurrency_, context, request, true);
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::economy::CurrencyReply>::Create(channel_.get(), cq, rpcmethod_ChangeCurrency_, context, request, true);
 }
 
 ::grpc::ClientAsyncResponseReader< ::economy::CurrencyReply>* TransportService::Stub::PrepareAsyncChangeCurrencyRaw(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::ClientAsyncResponseReader< ::economy::CurrencyReply>::Create(channel_.get(), cq, rpcmethod_ChangeCurrency_, context, request, false);
+  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::economy::CurrencyReply>::Create(channel_.get(), cq, rpcmethod_ChangeCurrency_, context, request, false);
 }
 
 TransportService::Service::Service() {
-  AddMethod(new ::grpc::RpcServiceMethod(
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
       TransportService_method_names[0],
-      ::grpc::RpcMethod::NORMAL_RPC,
-      new ::grpc::RpcMethodHandler< TransportService::Service, ::economy::DataRequest, ::economy::DataReply>(
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< TransportService::Service, ::economy::DataRequest, ::economy::DataReply>(
           std::mem_fn(&TransportService::Service::GetData), this)));
-  AddMethod(new ::grpc::RpcServiceMethod(
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
       TransportService_method_names[1],
-      ::grpc::RpcMethod::NORMAL_RPC,
-      new ::grpc::RpcMethodHandler< TransportService::Service, ::economy::CurrencyRequest, ::economy::CurrencyReply>(
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< TransportService::Service, ::economy::CurrencyRequest, ::economy::CurrencyReply>(
           std::mem_fn(&TransportService::Service::ChangeCurrency), this)));
 }
 

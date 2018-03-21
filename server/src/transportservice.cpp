@@ -22,7 +22,7 @@ grpc::Status TransportServiceImpl::GetData(grpc::ServerContext *context,
 
     const auto data = parser_->GetRange(Date(request->begin()), Date(request->end()));
     // keep this for using streaming
-    const size_t data_per_responce = data.size() > kDataPerResponse ? kDataPerResponse : data.size();
+    //const size_t data_per_responce = data.size() > kDataPerResponse ? kDataPerResponse : data.size();
 
         // send a chunck
     for(int i = 0 ; i< data.size(); ++i) {
@@ -41,7 +41,26 @@ grpc::Status TransportServiceImpl::ChangeCurrency(grpc::ServerContext *context,
                                                   const CurrencyRequest *request,
                                                   CurrencyReply *response)
 {
-    response->set_conversion_rate(1.5);
+    Currency new_currency;
+    new_currency.set_type(request->new_currency());
+
+    std::cout<<"Currency request in progress.."<<std::endl;
+    switch(request->new_currency())
+    {
+        case CurrencyType::RON:
+        new_currency.set_conversion_rate(1.0);
+        break;
+        case CurrencyType::EUR:
+        std::cout<<"Changing to EURO"<<std::endl;
+        new_currency.set_conversion_rate(4);
+        break;
+        case CurrencyType::USD:
+        std::cout<<"Changing to USD"<<std::endl;
+        new_currency.set_conversion_rate(3);
+        break;
+
+    }
+    response->mutable_currency()->CopyFrom(new_currency);
     return grpc::Status::OK;
 }
 } // namespace server

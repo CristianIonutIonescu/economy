@@ -15,15 +15,16 @@ namespace client
 
 class DataRetriever
 {
-  public:
-    explicit DataRetriever(const std::string &address);
-    DataRetriever(const DataRetriever &) = delete;
-    DataRetriever operator=(const DataRetriever &) = delete;
+public:
+  explicit DataRetriever(const std::string &address);
+  DataRetriever(const DataRetriever &) = delete;
+  DataRetriever operator=(const DataRetriever &) = delete;
 
-    std::vector<std::pair<Date, float>> GetData(const Date &begin, const Date &end);
-    double ChangeCurrency(const Currency &currency);
-    private:
-    std::unique_ptr<TransportService::Stub> stub_;
+  std::vector<std::pair<Date, float>> GetData(const Date &begin, const Date &end);
+  Currency ChangeCurrency(const CurrencyType &currency);
+
+private:
+  std::unique_ptr<TransportService::Stub> stub_;
 };
 } // namespace client
 } // namespace economy

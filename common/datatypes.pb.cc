@@ -25,6 +25,11 @@ class ProtoDateDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<ProtoDate>
       _instance;
 } _ProtoDate_default_instance_;
+class CurrencyDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<Currency>
+      _instance;
+} _Currency_default_instance_;
 class DataPayloadDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<DataPayload>
@@ -71,6 +76,27 @@ void InitDefaultsProtoDateImpl() {
 void InitDefaultsProtoDate() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsProtoDateImpl);
+}
+
+void InitDefaultsCurrencyImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::economy::_Currency_default_instance_;
+    new (ptr) ::economy::Currency();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::economy::Currency::InitAsDefaultInstance();
+}
+
+void InitDefaultsCurrency() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsCurrencyImpl);
 }
 
 void InitDefaultsDataPayloadImpl() {
@@ -168,6 +194,7 @@ void InitDefaultsCurrencyReplyImpl() {
 #else
   ::google::protobuf::internal::InitProtobufDefaults();
 #endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  protobuf_datatypes_2eproto::InitDefaultsCurrency();
   {
     void* ptr = &::economy::_CurrencyReply_default_instance_;
     new (ptr) ::economy::CurrencyReply();
@@ -181,7 +208,7 @@ void InitDefaultsCurrencyReply() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsCurrencyReplyImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[6];
+::google::protobuf::Metadata file_level_metadata[7];
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
@@ -193,6 +220,13 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::economy::ProtoDate, day_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::economy::ProtoDate, month_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::economy::ProtoDate, year_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::economy::Currency, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::economy::Currency, type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::economy::Currency, conversion_rate_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::economy::DataPayload, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -224,19 +258,21 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::economy::CurrencyReply, conversion_rate_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::economy::CurrencyReply, currency_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::economy::ProtoDate)},
-  { 8, -1, sizeof(::economy::DataPayload)},
-  { 15, -1, sizeof(::economy::DataRequest)},
-  { 22, -1, sizeof(::economy::DataReply)},
-  { 28, -1, sizeof(::economy::CurrencyRequest)},
-  { 34, -1, sizeof(::economy::CurrencyReply)},
+  { 8, -1, sizeof(::economy::Currency)},
+  { 15, -1, sizeof(::economy::DataPayload)},
+  { 22, -1, sizeof(::economy::DataRequest)},
+  { 29, -1, sizeof(::economy::DataReply)},
+  { 35, -1, sizeof(::economy::CurrencyRequest)},
+  { 41, -1, sizeof(::economy::CurrencyReply)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::economy::_ProtoDate_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::economy::_Currency_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::economy::_DataPayload_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::economy::_DataRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::economy::_DataReply_default_instance_),
@@ -260,7 +296,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 6);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 7);
 }
 
 void AddDescriptorsImpl() {
@@ -268,22 +304,24 @@ void AddDescriptorsImpl() {
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\017datatypes.proto\022\007economy\"5\n\tProtoDate\022"
       "\013\n\003day\030\001 \001(\005\022\r\n\005month\030\002 \001(\005\022\014\n\004year\030\003 \001("
-      "\005\">\n\013DataPayload\022 \n\004date\030\001 \001(\0132\022.economy"
-      ".ProtoDate\022\r\n\005value\030\002 \001(\002\"Q\n\013DataRequest"
-      "\022!\n\005begin\030\001 \001(\0132\022.economy.ProtoDate\022\037\n\003e"
-      "nd\030\002 \001(\0132\022.economy.ProtoDate\"2\n\tDataRepl"
-      "y\022%\n\007content\030\001 \003(\0132\024.economy.DataPayload"
-      "\":\n\017CurrencyRequest\022\'\n\014new_currency\030\001 \001("
-      "\0162\021.economy.Currency\"(\n\rCurrencyReply\022\027\n"
-      "\017conversion_rate\030\001 \001(\001*%\n\010Currency\022\007\n\003RO"
-      "N\020\000\022\007\n\003EUR\020\001\022\007\n\003USD\020\0022\217\001\n\020TransportServi"
-      "ce\0225\n\007GetData\022\024.economy.DataRequest\032\022.ec"
-      "onomy.DataReply\"\000\022D\n\016ChangeCurrency\022\030.ec"
-      "onomy.CurrencyRequest\032\026.economy.Currency"
-      "Reply\"\000b\006proto3"
+      "\005\"H\n\010Currency\022#\n\004type\030\001 \001(\0162\025.economy.Cu"
+      "rrencyType\022\027\n\017conversion_rate\030\002 \001(\001\">\n\013D"
+      "ataPayload\022 \n\004date\030\001 \001(\0132\022.economy.Proto"
+      "Date\022\r\n\005value\030\002 \001(\002\"Q\n\013DataRequest\022!\n\005be"
+      "gin\030\001 \001(\0132\022.economy.ProtoDate\022\037\n\003end\030\002 \001"
+      "(\0132\022.economy.ProtoDate\"2\n\tDataReply\022%\n\007c"
+      "ontent\030\001 \003(\0132\024.economy.DataPayload\">\n\017Cu"
+      "rrencyRequest\022+\n\014new_currency\030\001 \001(\0162\025.ec"
+      "onomy.CurrencyType\"4\n\rCurrencyReply\022#\n\010c"
+      "urrency\030\001 \001(\0132\021.economy.Currency*)\n\014Curr"
+      "encyType\022\007\n\003RON\020\000\022\007\n\003EUR\020\001\022\007\n\003USD\020\0022\217\001\n\020"
+      "TransportService\0225\n\007GetData\022\024.economy.Da"
+      "taRequest\032\022.economy.DataReply\"\000\022D\n\016Chang"
+      "eCurrency\022\030.economy.CurrencyRequest\032\026.ec"
+      "onomy.CurrencyReply\"\000b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 575);
+      descriptor, 669);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "datatypes.proto", &protobuf_RegisterTypes);
 }
@@ -300,11 +338,11 @@ struct StaticDescriptorInitializer {
 } static_descriptor_initializer;
 }  // namespace protobuf_datatypes_2eproto
 namespace economy {
-const ::google::protobuf::EnumDescriptor* Currency_descriptor() {
+const ::google::protobuf::EnumDescriptor* CurrencyType_descriptor() {
   protobuf_datatypes_2eproto::protobuf_AssignDescriptorsOnce();
   return protobuf_datatypes_2eproto::file_level_enum_descriptors[0];
 }
-bool Currency_IsValid(int value) {
+bool CurrencyType_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
@@ -627,6 +665,286 @@ void ProtoDate::InternalSwap(ProtoDate* other) {
 }
 
 ::google::protobuf::Metadata ProtoDate::GetMetadata() const {
+  protobuf_datatypes_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_datatypes_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void Currency::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int Currency::kTypeFieldNumber;
+const int Currency::kConversionRateFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+Currency::Currency()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_datatypes_2eproto::InitDefaultsCurrency();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:economy.Currency)
+}
+Currency::Currency(const Currency& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&conversion_rate_, &from.conversion_rate_,
+    static_cast<size_t>(reinterpret_cast<char*>(&type_) -
+    reinterpret_cast<char*>(&conversion_rate_)) + sizeof(type_));
+  // @@protoc_insertion_point(copy_constructor:economy.Currency)
+}
+
+void Currency::SharedCtor() {
+  ::memset(&conversion_rate_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&type_) -
+      reinterpret_cast<char*>(&conversion_rate_)) + sizeof(type_));
+  _cached_size_ = 0;
+}
+
+Currency::~Currency() {
+  // @@protoc_insertion_point(destructor:economy.Currency)
+  SharedDtor();
+}
+
+void Currency::SharedDtor() {
+}
+
+void Currency::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* Currency::descriptor() {
+  ::protobuf_datatypes_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_datatypes_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const Currency& Currency::default_instance() {
+  ::protobuf_datatypes_2eproto::InitDefaultsCurrency();
+  return *internal_default_instance();
+}
+
+Currency* Currency::New(::google::protobuf::Arena* arena) const {
+  Currency* n = new Currency;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void Currency::Clear() {
+// @@protoc_insertion_point(message_clear_start:economy.Currency)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&conversion_rate_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&type_) -
+      reinterpret_cast<char*>(&conversion_rate_)) + sizeof(type_));
+  _internal_metadata_.Clear();
+}
+
+bool Currency::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:economy.Currency)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // .economy.CurrencyType type = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_type(static_cast< ::economy::CurrencyType >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // double conversion_rate = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(17u /* 17 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &conversion_rate_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:economy.Currency)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:economy.Currency)
+  return false;
+#undef DO_
+}
+
+void Currency::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:economy.Currency)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .economy.CurrencyType type = 1;
+  if (this->type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->type(), output);
+  }
+
+  // double conversion_rate = 2;
+  if (this->conversion_rate() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(2, this->conversion_rate(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:economy.Currency)
+}
+
+::google::protobuf::uint8* Currency::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:economy.Currency)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .economy.CurrencyType type = 1;
+  if (this->type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->type(), target);
+  }
+
+  // double conversion_rate = 2;
+  if (this->conversion_rate() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(2, this->conversion_rate(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:economy.Currency)
+  return target;
+}
+
+size_t Currency::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:economy.Currency)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // double conversion_rate = 2;
+  if (this->conversion_rate() != 0) {
+    total_size += 1 + 8;
+  }
+
+  // .economy.CurrencyType type = 1;
+  if (this->type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void Currency::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:economy.Currency)
+  GOOGLE_DCHECK_NE(&from, this);
+  const Currency* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const Currency>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:economy.Currency)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:economy.Currency)
+    MergeFrom(*source);
+  }
+}
+
+void Currency::MergeFrom(const Currency& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:economy.Currency)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.conversion_rate() != 0) {
+    set_conversion_rate(from.conversion_rate());
+  }
+  if (from.type() != 0) {
+    set_type(from.type());
+  }
+}
+
+void Currency::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:economy.Currency)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Currency::CopyFrom(const Currency& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:economy.Currency)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Currency::IsInitialized() const {
+  return true;
+}
+
+void Currency::Swap(Currency* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void Currency::InternalSwap(Currency* other) {
+  using std::swap;
+  swap(conversion_rate_, other->conversion_rate_);
+  swap(type_, other->type_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata Currency::GetMetadata() const {
   protobuf_datatypes_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_datatypes_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -1541,7 +1859,7 @@ bool CurrencyRequest::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // .economy.Currency new_currency = 1;
+      // .economy.CurrencyType new_currency = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
@@ -1549,7 +1867,7 @@ bool CurrencyRequest::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_new_currency(static_cast< ::economy::Currency >(value));
+          set_new_currency(static_cast< ::economy::CurrencyType >(value));
         } else {
           goto handle_unusual;
         }
@@ -1582,7 +1900,7 @@ void CurrencyRequest::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .economy.Currency new_currency = 1;
+  // .economy.CurrencyType new_currency = 1;
   if (this->new_currency() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->new_currency(), output);
@@ -1602,7 +1920,7 @@ void CurrencyRequest::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .economy.Currency new_currency = 1;
+  // .economy.CurrencyType new_currency = 1;
   if (this->new_currency() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->new_currency(), target);
@@ -1625,7 +1943,7 @@ size_t CurrencyRequest::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // .economy.Currency new_currency = 1;
+  // .economy.CurrencyType new_currency = 1;
   if (this->new_currency() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->new_currency());
@@ -1703,9 +2021,11 @@ void CurrencyRequest::InternalSwap(CurrencyRequest* other) {
 // ===================================================================
 
 void CurrencyReply::InitAsDefaultInstance() {
+  ::economy::_CurrencyReply_default_instance_._instance.get_mutable()->currency_ = const_cast< ::economy::Currency*>(
+      ::economy::Currency::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int CurrencyReply::kConversionRateFieldNumber;
+const int CurrencyReply::kCurrencyFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CurrencyReply::CurrencyReply()
@@ -1721,12 +2041,16 @@ CurrencyReply::CurrencyReply(const CurrencyReply& from)
       _internal_metadata_(NULL),
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  conversion_rate_ = from.conversion_rate_;
+  if (from.has_currency()) {
+    currency_ = new ::economy::Currency(*from.currency_);
+  } else {
+    currency_ = NULL;
+  }
   // @@protoc_insertion_point(copy_constructor:economy.CurrencyReply)
 }
 
 void CurrencyReply::SharedCtor() {
-  conversion_rate_ = 0;
+  currency_ = NULL;
   _cached_size_ = 0;
 }
 
@@ -1736,6 +2060,7 @@ CurrencyReply::~CurrencyReply() {
 }
 
 void CurrencyReply::SharedDtor() {
+  if (this != internal_default_instance()) delete currency_;
 }
 
 void CurrencyReply::SetCachedSize(int size) const {
@@ -1767,7 +2092,10 @@ void CurrencyReply::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  conversion_rate_ = 0;
+  if (GetArenaNoVirtual() == NULL && currency_ != NULL) {
+    delete currency_;
+  }
+  currency_ = NULL;
   _internal_metadata_.Clear();
 }
 
@@ -1781,14 +2109,12 @@ bool CurrencyReply::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // double conversion_rate = 1;
+      // .economy.Currency currency = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(9u /* 9 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, &conversion_rate_)));
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_currency()));
         } else {
           goto handle_unusual;
         }
@@ -1821,9 +2147,10 @@ void CurrencyReply::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // double conversion_rate = 1;
-  if (this->conversion_rate() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(1, this->conversion_rate(), output);
+  // .economy.Currency currency = 1;
+  if (this->has_currency()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, *this->currency_, output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -1840,9 +2167,11 @@ void CurrencyReply::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // double conversion_rate = 1;
-  if (this->conversion_rate() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(1, this->conversion_rate(), target);
+  // .economy.Currency currency = 1;
+  if (this->has_currency()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, *this->currency_, deterministic, target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -1862,9 +2191,11 @@ size_t CurrencyReply::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // double conversion_rate = 1;
-  if (this->conversion_rate() != 0) {
-    total_size += 1 + 8;
+  // .economy.Currency currency = 1;
+  if (this->has_currency()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *this->currency_);
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -1896,8 +2227,8 @@ void CurrencyReply::MergeFrom(const CurrencyReply& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.conversion_rate() != 0) {
-    set_conversion_rate(from.conversion_rate());
+  if (from.has_currency()) {
+    mutable_currency()->::economy::Currency::MergeFrom(from.currency());
   }
 }
 
@@ -1925,7 +2256,7 @@ void CurrencyReply::Swap(CurrencyReply* other) {
 }
 void CurrencyReply::InternalSwap(CurrencyReply* other) {
   using std::swap;
-  swap(conversion_rate_, other->conversion_rate_);
+  swap(currency_, other->currency_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
 }

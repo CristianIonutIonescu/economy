@@ -1,5 +1,7 @@
 #include "dataparser.hpp"
 
+#include "../../common/utils.hpp"
+
 #include <fstream>
 #include <sstream>
 
@@ -10,32 +12,47 @@ namespace economy
 {
 namespace server
 {
+
+bool DataParser::stop_s = false;
+
 void DataParser::ReadData()
 {
     std::lock_guard<std::mutex> lock(*data_lock_);
-
     std::ifstream file(path_);
+
+    auto backup_data = data_;
+    data_.clear();
+
     std::string line;
-    while (std::getline(file, line))
+
+    try
     {
-        if(line.empty()){
-            break;
-        }
-        
-        size_t separator_pos = line.find(separator);
-        economy::Date date;
-        auto str_date = line.substr(0, separator_pos);
-        date.FromString(str_date, date_format);
-        float value = std::stof(line.substr(separator_pos + 1));
-        if (data_.find(date) != data_.end())
+        while (std::getline(file, line))
         {
-            data_[date] += value;
+            if (line.empty())
+            {
+                break;
+            }
+
+            auto content = ParseCSVLine(line, separator);
+            economy::Date date(content[0], date_format);
+
+            float value = std::stof(content[1]);
+
+            if (data_.find(date) != data_.end())
+            {
+                data_[date] += value;
+            }
+            else
+            {
+                data_.insert({date, value});
+            }
         }
-        else
-        {
-            data_.insert({date, value});
-        }
+    } catch(const std::exception &ex) {
+        std::cerr<<"Could not read data: " << ex.what() << ". Old data in place." << std::endl;
+        data_ = backup_data;
     }
+
     last_read_date_ = time(0);
     file.close();
 }
@@ -68,12 +85,5 @@ bool DataParser::CheckDataFresh() const
     return last_modified_date.tv_sec > last_read_date_;
 }
 
-void DataParser::Print() const
-{
-    for (const auto &it : data_)
-    {
-        std::cout << it.first.ToString(date_format) << separator << it.second << std::endl;
-    }
-}
 }
 }

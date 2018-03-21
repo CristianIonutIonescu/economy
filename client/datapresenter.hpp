@@ -1,34 +1,68 @@
 #ifndef DATAPRESENTER_HPP
 #define DATAPRESENTER_HPP
 
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
-#include <QtCharts/QChartView>
-#include <QtCharts/QLineSeries>
-#include <QtCore/QDateTime>
-#include <QtCharts/QDateTimeAxis>
-#include <QtCore/QFile>
-#include <QtCore/QTextStream>
-#include <QtCore/QDebug>
-#include <QtCharts/QValueAxis>
+#include "chart.hpp"
+#include "dataretriever.hpp"
 
-QT_CHARTS_USE_NAMESPACE
+#include <QtWidgets/QtWidgets>
 
 namespace economy
 {
 namespace client
 {
 
-class DataRetriever;
-
-class Presenter
+class DataPresenter : public QWidget
 {
-  public:
-    explicit Presenter(DataRetriever *retriever) : retriever_(retriever) {}
-    QChartView * Run();
+  Q_OBJECT
+public:
+  DataPresenter();
+private slots:
+  void RetrieveData();
 
-  private:
-    DataRetriever *retriever_;
+  void RetrieveCurrency();
+
+private:
+  void CreateChartGroupBox();
+
+  void CreateOptionsGroupBox();
+
+  void CreateDateGroupBox();
+
+  void CreateCurrencyGroupBox();
+
+  std::unique_ptr<QGroupBox> chartGroupBox_;
+  std::unique_ptr<QGridLayout> chartLayout_;
+  std::unique_ptr<QtCharts::QChartView> chartView_;
+  std::unique_ptr<EconomyChartModel> model_;
+  DataRetriever retriever_;
+
+  std::unique_ptr<QGroupBox> optionsGroupBox_;
+  std::unique_ptr<QGridLayout> optionsLayout_;
+
+  std::unique_ptr<QGroupBox> dateGroupBox_;
+  std::unique_ptr<QGridLayout> dateLayout_;
+  std::unique_ptr<QLabel> beginDateLabel_;
+  std::unique_ptr<QDateEdit> beginDateEdit_;
+  std::unique_ptr<QLabel> endDateLabel_;
+  std::unique_ptr<QDateEdit> endDateEdit_;
+  std::unique_ptr<QPushButton> getDataButton_;
+
+  std::unique_ptr<QGroupBox> currencyGroupBox_;
+  std::unique_ptr<QGridLayout> currencyLayout_;
+  std::unique_ptr<QLabel> newCurrencyLabel_;
+  std::unique_ptr<QComboBox> newCurrencyCombo_;
+  std::unique_ptr<QStringListModel> newCurrencyModel_;
+  std::unique_ptr<QPushButton> getNewCurrency_;
+  std::unique_ptr<QLabel> currentCurrencyLabel_;
+  std::unique_ptr<QLabel> currentCurrency_;
+
+  std::unique_ptr<QGroupBox> infoGroupBox_;
+  std::unique_ptr<QGridLayout> infoLayout_;
+  std::unique_ptr<QLabel> amountLabel_;
+  std::unique_ptr<QLabel> euroToRonLabel_;
+  std::unique_ptr<QLabel> usdToRonLabel_;
+
+  std::unique_ptr<QGridLayout> layout_;
 };
 }
 }

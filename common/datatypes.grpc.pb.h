@@ -6,20 +6,19 @@
 
 #include "datatypes.pb.h"
 
-#include <grpc++/impl/codegen/async_stream.h>
-#include <grpc++/impl/codegen/async_unary_call.h>
-#include <grpc++/impl/codegen/method_handler_impl.h>
-#include <grpc++/impl/codegen/proto_utils.h>
-#include <grpc++/impl/codegen/rpc_method.h>
-#include <grpc++/impl/codegen/service_type.h>
-#include <grpc++/impl/codegen/status.h>
-#include <grpc++/impl/codegen/stub_options.h>
-#include <grpc++/impl/codegen/sync_stream.h>
+#include <grpcpp/impl/codegen/async_stream.h>
+#include <grpcpp/impl/codegen/async_unary_call.h>
+#include <grpcpp/impl/codegen/method_handler_impl.h>
+#include <grpcpp/impl/codegen/proto_utils.h>
+#include <grpcpp/impl/codegen/rpc_method.h>
+#include <grpcpp/impl/codegen/service_type.h>
+#include <grpcpp/impl/codegen/status.h>
+#include <grpcpp/impl/codegen/stub_options.h>
+#include <grpcpp/impl/codegen/sync_stream.h>
 
 namespace grpc {
 class CompletionQueue;
 class Channel;
-class RpcService;
 class ServerCompletionQueue;
 class ServerContext;
 }  // namespace grpc
@@ -78,8 +77,8 @@ class TransportService final {
     ::grpc::ClientAsyncResponseReader< ::economy::DataReply>* PrepareAsyncGetDataRaw(::grpc::ClientContext* context, const ::economy::DataRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::economy::CurrencyReply>* AsyncChangeCurrencyRaw(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::economy::CurrencyReply>* PrepareAsyncChangeCurrencyRaw(::grpc::ClientContext* context, const ::economy::CurrencyRequest& request, ::grpc::CompletionQueue* cq) override;
-    const ::grpc::RpcMethod rpcmethod_GetData_;
-    const ::grpc::RpcMethod rpcmethod_ChangeCurrency_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetData_;
+    const ::grpc::internal::RpcMethod rpcmethod_ChangeCurrency_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -172,7 +171,7 @@ class TransportService final {
    public:
     WithStreamedUnaryMethod_GetData() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::StreamedUnaryHandler< ::economy::DataRequest, ::economy::DataReply>(std::bind(&WithStreamedUnaryMethod_GetData<BaseClass>::StreamedGetData, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler< ::economy::DataRequest, ::economy::DataReply>(std::bind(&WithStreamedUnaryMethod_GetData<BaseClass>::StreamedGetData, this, std::placeholders::_1, std::placeholders::_2)));
     }
     ~WithStreamedUnaryMethod_GetData() override {
       BaseClassMustBeDerivedFromService(this);
@@ -192,7 +191,7 @@ class TransportService final {
    public:
     WithStreamedUnaryMethod_ChangeCurrency() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::StreamedUnaryHandler< ::economy::CurrencyRequest, ::economy::CurrencyReply>(std::bind(&WithStreamedUnaryMethod_ChangeCurrency<BaseClass>::StreamedChangeCurrency, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler< ::economy::CurrencyRequest, ::economy::CurrencyReply>(std::bind(&WithStreamedUnaryMethod_ChangeCurrency<BaseClass>::StreamedChangeCurrency, this, std::placeholders::_1, std::placeholders::_2)));
     }
     ~WithStreamedUnaryMethod_ChangeCurrency() override {
       BaseClassMustBeDerivedFromService(this);

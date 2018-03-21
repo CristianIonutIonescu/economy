@@ -8,6 +8,53 @@ message ProtoDate {
     int32 year = 3;
 }
 
+//enum AccountType
+//{
+//    UNKOWN = 0;
+//    DEBIT = 1;
+//    CREDIT = 2;
+//    SAVINGS = 3;
+//    DEPOSITS = 4;
+//    LOANS = 5;
+//}
+
+//enum EntryType
+//{
+//    UNKOWN = 0;
+//    WITHDRAWALS = 1;
+//    UTILITIES = 2;
+//    SHOPPING = 3;
+//    RENT = 4;
+//    REINBURSMENT = 5;
+//    SALARY = 6;
+//    INTEREST = 7;
+//    LOANS = 8;
+//   WINNINGS = 9;
+//    OTHERS = 10;
+//}
+
+enum CurrencyType {
+    RON = 0;
+    EUR = 1;
+    USD = 2;
+}
+
+message Currency {
+    CurrencyType type = 1;
+    double conversion_rate = 2;
+}
+
+//message Entry
+//{
+//    ProtoDate date = 1;
+//    string account_id = 2;  // IBAN
+//    AccountType account_type = 3;
+//    CurrencyType currency_type = 4;
+//    float value = 5;
+//    EntryType entry_type = 6;
+//    string info = 7;  // ADDITIONAL INFO
+//}
+
 message DataPayload {
     ProtoDate date = 1;
     float value = 2;
@@ -22,20 +69,13 @@ message DataReply {
     repeated DataPayload content = 1;
 }
 
-enum Currency {
-    RON = 0;
-    EUR = 1;
-    USD = 2;
-}
-
 message CurrencyRequest {
-    Currency new_currency = 1;
+    CurrencyType new_currency = 1;
 }
 
 message CurrencyReply {
-    double conversion_rate = 1;
+    Currency currency = 1;
 }
-
 
 service TransportService {
     rpc GetData(DataRequest) returns (DataReply) {}

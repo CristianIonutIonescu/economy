@@ -1,8 +1,8 @@
 #ifndef TRANSPORTSERVICE_HPP
 #define TRANSPORTSERVICE_HPP
 
-#include <grpc++/grpc++.h>
-#include "../common/datatypes.grpc.pb.h"
+#include <grpcpp/grpcpp.h>
+#include "../../common/datatypes.grpc.pb.h"
 #include "dataparser.hpp"
 
 namespace economy

@@ -3,9 +3,9 @@
 
 #include "datatypes.pb.h"
 
+#include <ctime>
 #include <string>
 #include <vector>
-
 
 namespace economy
 {
@@ -19,6 +19,8 @@ public:
   Date(const std::string &date, const std::string &format = "DD-MM-YYYY") { FromString(date, format); }
 
   Date(const ProtoDate &date) { FromProtoDate(date); }
+
+  Date(const std::time_t &time) { FromEpochTime(time); }
 
   Date(const Date &rhs) : day_(rhs.day_), month_(rhs.month_), year_(rhs.year_) {}
 
@@ -53,7 +55,10 @@ public:
   ProtoDate ToProtoDate() const;
   void FromString(const std::string &date, const std::string &format = "DD-MM-YYYY");
   void FromProtoDate(const ProtoDate &date);
-  uint64_t SecsSinceEpoch() const;
+  void FromEpochTime(const std::time_t &date);
+  uint64_t ToEpochTime() const;
+
+  ~Date() = default;
 
 private:
   const std::vector<std::string> date_formats{

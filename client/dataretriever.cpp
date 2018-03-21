@@ -1,5 +1,5 @@
 #include "dataretriever.hpp"
-#include <grpc++/grpc++.h>
+#include <grpcpp/grpcpp.h>
 
 namespace economy
 {
@@ -42,7 +42,7 @@ std::vector<std::pair<Date, float>> DataRetriever::GetData(const Date &begin, co
     return data;
 }
 
-double DataRetriever::ChangeCurrency(const Currency &currency)
+Currency DataRetriever::ChangeCurrency(const CurrencyType &currency)
 {
     CurrencyRequest request;
     request.set_new_currency(currency);
@@ -55,7 +55,7 @@ double DataRetriever::ChangeCurrency(const Currency &currency)
         throw std::runtime_error(status.error_message());
     }
 
-    return reply.conversion_rate();
+    return reply.currency();
 }
 }
 }

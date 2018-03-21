@@ -72,6 +72,38 @@ void Date::FromString(const std::string &date, const std::string &format)
     }
 }
 
+ProtoDate Date::ToProtoDate() const {
+    ProtoDate proto_date;
+    proto_date.set_day(day_);
+    proto_date.set_month(month_);
+    proto_date.set_year(year_);
+    return proto_date;
+}
+
+void Date::FromProtoDate(const ProtoDate &date)
+{
+    day_ = date.day();
+    month_ = date.month();
+    year_ = date.year();
+}
+
+void Date::FromEpochTime(const std::time_t &date)
+{
+    struct tm *tm_time = std::localtime(&date);
+    day_ = tm_time->tm_mday;
+    month_ = tm_time->tm_mon;
+    year_ = tm_time->tm_year + 1900;
+}
+
+uint64_t Date::ToEpochTime() const
+{
+    std::tm tmTime;
+    std::string str_time = this->ToString();
+    memset(&tmTime, 0, sizeof(tmTime));
+    strptime(str_time.c_str(), "%d-%m-%Y", &tmTime);
+    return (uint64_t)mktime(&tmTime);
+}
+
 bool Date::operator==(const Date &rhs) const
 {
     return this->day_ == rhs.day_ && this->month_ == rhs.month_ && this->year_ == rhs.year_;
@@ -119,29 +151,5 @@ bool Date::operator>=(const Date &rhs) const
 bool Date::operator<=(const Date &rhs) const
 {
     return (*this < rhs) || (*this == rhs);
-}
-
-ProtoDate Date::ToProtoDate() const {
-    ProtoDate proto_date;
-    proto_date.set_day(day_);
-    proto_date.set_month(month_);
-    proto_date.set_year(year_);
-    return proto_date;
-}
-
-void Date::FromProtoDate(const ProtoDate &date)
-{
-    day_ = date.day();
-    month_ = date.month();
-    year_ = date.year();
-}
-
-uint64_t Date::SecsSinceEpoch() const
-{
-    std::tm tmTime;
-    std::string str_time = this->ToString();
-    memset(&tmTime, 0, sizeof(tmTime));
-    strptime(str_time.c_str(), "%d-%m-%Y", &tmTime);
-    return (uint64_t)mktime(&tmTime);
 }
 }

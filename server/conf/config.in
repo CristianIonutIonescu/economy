@@ -1,0 +1,5 @@
+--address=localhost
+--port=8080
+--savings_path=./resources/data.csv
+--currencies_path=./resources/exchanges.csv
+--script_path=./scripts/currencyretriever.py

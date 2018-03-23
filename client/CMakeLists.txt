@@ -4,8 +4,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 project(client)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/../cmake/")
-
 # Point to Qt cmake files
 set(CMAKE_PREFIX_PATH 
     ${CMAKE_PREFIX_PATH} 

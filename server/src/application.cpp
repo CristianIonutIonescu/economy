@@ -5,6 +5,22 @@
 #include <iostream> // to remove
 #include <chrono>
 #include <ctime>
+#include <gflags/gflags.h>
+
+static bool ValidatePort(const char *flagname, int32_t value)
+{
+    if (value > 0 && value < 32768) // value is ok
+        return true;
+    std::cerr<<"Invalid value for --"<< flagname<< ":" <<value<<std::endl;
+    return false;
+}
+
+DEFINE_string(address, "localhost", "server listening address");
+DEFINE_int32(port, 8080, "server listening port");
+DEFINE_validator(port, &ValidatePort);
+DEFINE_string(savings_path, "./resources/data.csv", "savings file path");
+DEFINE_string(currencies_path, "./resources/exchanges.csv", "exchange rates file path");
+DEFINE_string(script_path, "./scripts/currencyretriever.py", "exchange rates retriever path");
 
 namespace economy
 {
@@ -15,18 +31,11 @@ volatile bool Application::s_close = false;
 
 Application::Application(int argc, char **argv)
 {
-    /*if (argc < 3)
-    {
-        throw std::runtime_error("Server requires 2 arguments");
-    }*/
-
-    std::string address = "localhost:8080"; //argv[1];
-    std::string path = "data.csv";          //argv[2];
+    ::google::ParseCommandLineFlags(&argc, &argv, true);
     data_sync_ = std::make_unique<std::mutex>();
-
-    StartParser(path);
-    StartRetriever(".", ".");
-    StartServer(address);
+    StartParser(FLAGS_savings_path);
+    StartRetriever(FLAGS_currencies_path, FLAGS_script_path);
+    StartServer(FLAGS_address);
 }
 
 void Application::StartParser(const std::string &file_path)
@@ -113,7 +122,8 @@ void Application::StartRetriever(const std::string &data_path, const std::string
 void Application::Run()
 {
     using namespace std::chrono_literals;
-    while(!s_close) {
+    while (!s_close)
+    {
         std::this_thread::sleep_for(5s);
     }
 }
@@ -137,6 +147,8 @@ void Application::Close()
     {
         currency_thread_.join();
     }
+
+    ::google::ShutDownCommandLineFlags();
 }
 } // namespace server
 } // namespace economy

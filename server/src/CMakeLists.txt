@@ -13,6 +13,7 @@ list(APPEND CMAKE_PREFIX_PATH
 
 find_package(Protobuf REQUIRED)
 find_package(gRPC REQUIRED)
+find_package(gflags REQUIRED)
 
 add_executable(server
     main.cpp 
@@ -30,5 +31,6 @@ add_executable(server
 
 target_link_libraries(server
     ${PROTOBUF_LIBRARY}
+    gflags
     gRPC::grpc++
     libtiny-process-library.so)

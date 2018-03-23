@@ -5,21 +5,21 @@
 
 #include <fstream>
 
-
 namespace economy
 {
 namespace server
 {
 
-CurrencyRetriever::CurrencyRetriever(std::mutex *lock, const std::string &db_path, const std::string &script_path)
+CurrencyRetriever::CurrencyRetriever(std::mutex *lock,
+                                     const std::string &db_path,
+                                     const std::string &script_path)
+    : data_lock_(lock),
+      script_path_("python " + script_path),
+      db_path_(db_path)
 {
-    data_lock_ = lock;
-    script_path_ = "python " + script_path + "/" + s_script_filename;
-
-    db_path_ = db_path + "/" + s_db_filename;
-    LoadData();
 }
 
+// TODO: handle io exceptions
 void CurrencyRetriever::LoadData()
 {
     std::ifstream file(db_path_);
@@ -39,18 +39,22 @@ void CurrencyRetriever::LoadData()
     }
     catch (const std::exception &ex)
     {
-        std::cerr << "Could not read currency archive: " << ex.what() << std::endl;
+        std::cerr << "Could not read currency archive: " << ex.what()
+                  << std::endl;
     }
 
     file.close();
 }
+
+//TODO: handle io exceptions
 void CurrencyRetriever::SaveData()
 {
     std::ofstream file(db_path_);
 
     for (const auto &it : data_)
     {
-        file << it.first.ToString("YYYY-MM-DD") << "," << it.second.euro << "," << it.second.usd << std::endl;
+        file << it.first.ToString("YYYY-MM-DD") << "," << it.second.euro << ","
+             << it.second.usd << std::endl;
     }
 
     file.close();
@@ -70,6 +74,10 @@ bool CurrencyRetriever::RequestCurrency()
     TinyProcessLib::Process retriever_process(script_path_, "", stdout_pipe);
 
     DigestData(content);
+
+    SaveData();
+
+    return true;
 }
 
 Currency CurrencyRetriever::GetCurrency(CurrencyType type) const
@@ -91,6 +99,7 @@ Currency CurrencyRetriever::GetCurrency(CurrencyType type) const
     return currency;
 }
 
+//TODO: handle exceptions.
 void CurrencyRetriever::DigestData(const std::string &content)
 {
     auto info = ParseCSVLine(content, ',');

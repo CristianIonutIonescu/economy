@@ -22,8 +22,9 @@ class CurrencyRetriever
     };
 
   public:
-     
-    explicit CurrencyRetriever(std::mutex *lock, const std::string &db_path, const std::string &script_path);
+    explicit CurrencyRetriever(std::mutex *lock,
+                               const std::string &db_path,
+                               const std::string &script_path);
 
     CurrencyRetriever(const CurrencyRetriever &) = delete;
     CurrencyRetriever operator=(const CurrencyRetriever &) = delete;
@@ -37,10 +38,8 @@ class CurrencyRetriever
     inline void Shutdown() noexcept { closing_ = true; }
 
     inline bool Closing() const noexcept { return closing_; }
-  private:
-    static constexpr auto s_db_filename = "currency_db.dat";
-    static constexpr auto s_script_filename = "currencyretriever.py";
 
+  private:
     void DigestData(const std::string &content);
     void LoadData();
     void SaveData();
@@ -48,7 +47,7 @@ class CurrencyRetriever
     std::string script_path_;
     std::string db_path_;
     std::map<economy::Date, CurrencyEntry> data_;
-    std::mutex* data_lock_;
+    std::mutex *data_lock_;
     bool closing_;
 };
 }

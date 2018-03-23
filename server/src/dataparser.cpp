@@ -13,7 +13,7 @@ namespace economy
 namespace server
 {
 
-bool DataParser::stop_s = false;
+using data_container = std::vector<std::pair<economy::Date, float>>;
 
 void DataParser::ReadData()
 {
@@ -48,15 +48,19 @@ void DataParser::ReadData()
                 data_.insert({date, value});
             }
         }
-    } catch(const std::exception &ex) {
-        std::cerr<<"Could not read data: " << ex.what() << ". Old data in place." << std::endl;
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << "Could not read data: " << ex.what()
+                  << ". Old data in place." << std::endl;
         data_ = backup_data;
     }
 
     last_read_date_ = time(0);
     file.close();
 }
-std::vector<std::pair<economy::Date, float>> DataParser::GetRange(const economy::Date &beg, const economy::Date &end) const
+data_container DataParser::GetRange(const economy::Date &beg,
+                                    const economy::Date &end) const
 {
     std::lock_guard<std::mutex> lock(*data_lock_);
     std::vector<std::pair<economy::Date, float>> range;
@@ -84,6 +88,5 @@ bool DataParser::CheckDataFresh() const
 
     return last_modified_date.tv_sec > last_read_date_;
 }
-
 }
 }

@@ -7,20 +7,39 @@
 #include <ctime>
 #include <gflags/gflags.h>
 
+namespace
+{
 static bool ValidatePort(const char *flagname, int32_t value)
 {
-    if (value > 0 && value < 32768) // value is ok
+    if (value > 0 && value < 32768)
         return true;
-    std::cerr<<"Invalid value for --"<< flagname<< ":" <<value<<std::endl;
+    std::cerr << "Invalid value for --" << flagname << ":" << value << std::endl;
     return false;
 }
 
-DEFINE_string(address, "localhost", "server listening address");
+static bool ValidateString(const char *flagname, const std::string &value)
+{
+    if (value != "")
+    {
+        return true;
+    }
+
+    std::cerr << "Invalid value for --" << flagname << ":" << value << std::endl;
+    return false;
+}
+
+DEFINE_string(address, "", "server listening address");
 DEFINE_int32(port, 8080, "server listening port");
+DEFINE_string(savings_path, "", "savings file path");
+DEFINE_string(currencies_path, "", "exchange rates file path");
+DEFINE_string(script_path, "", "exchange rates retriever path");
+
 DEFINE_validator(port, &ValidatePort);
-DEFINE_string(savings_path, "./resources/data.csv", "savings file path");
-DEFINE_string(currencies_path, "./resources/exchanges.csv", "exchange rates file path");
-DEFINE_string(script_path, "./scripts/currencyretriever.py", "exchange rates retriever path");
+DEFINE_validator(address, &ValidateString);
+DEFINE_validator(savings_path, &ValidateString);
+DEFINE_validator(currencies_path, &ValidateString);
+DEFINE_validator(script_path, &ValidateString);
+}
 
 namespace economy
 {
@@ -74,9 +93,12 @@ void Application::StartServer(const std::string &address)
     int test = 3;
 }
 
-void Application::StartRetriever(const std::string &data_path, const std::string &script_path)
+void Application::StartRetriever(const std::string &data_path,
+                                 const std::string &script_path)
 {
-    currency_retriever_ = std::make_unique<CurrencyRetriever>(data_sync_.get(), data_path, script_path);
+    currency_retriever_ = std::make_unique<CurrencyRetriever>(data_sync_.get(),
+                                                              data_path,
+                                                              script_path);
     currency_thread_ = std::thread([this]() {
         while (!currency_retriever_->Closing())
         {

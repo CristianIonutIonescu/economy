@@ -17,16 +17,23 @@ class Application
 {
   public:
     explicit Application(int argc, char **argv);
+
     ~Application() = default;
+
     void StartServer(const std::string &address);
+
     void StartParser(const std::string &file_path_);
-    void StartRetriever(const std::string &data_path, const std::string &script_path);
+
+    void StartRetriever(const std::string &data_path,
+                        const std::string &script_path);
+
     void Run();
+
     void Close();
 
     static volatile bool s_close;
-  private:
 
+  private:
     std::unique_ptr<DataParser> parser_;
     std::unique_ptr<grpc::Server> server_;
     std::unique_ptr<CurrencyRetriever> currency_retriever_;

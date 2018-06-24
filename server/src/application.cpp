@@ -2,10 +2,11 @@
 
 #include "../../common/utils.hpp"
 
-#include <iostream> // to remove
+#include <gflags/gflags.h>
+
 #include <chrono>
 #include <ctime>
-#include <gflags/gflags.h>
+#include <iostream>
 
 namespace
 {
@@ -28,11 +29,11 @@ static bool ValidateString(const char *flagname, const std::string &value)
     return false;
 }
 
-DEFINE_string(address, "", "server listening address");
+DEFINE_string(address, "localhost", "server listening address");
 DEFINE_int32(port, 8080, "server listening port");
-DEFINE_string(savings_path, "", "savings file path");
-DEFINE_string(currencies_path, "", "exchange rates file path");
-DEFINE_string(script_path, "", "exchange rates retriever path");
+DEFINE_string(savings_path, "./resources/data.csv", "savings file path");
+DEFINE_string(currencies_path, "./resources/exchanges.dat", "exchange rates file path");
+DEFINE_string(script_path, "./scripts/currencyretriever.py", "exchange rates retriever path");
 
 DEFINE_validator(port, &ValidatePort);
 DEFINE_validator(address, &ValidateString);
@@ -53,8 +54,8 @@ Application::Application(int argc, char **argv)
     ::google::ParseCommandLineFlags(&argc, &argv, true);
     data_sync_ = std::make_unique<std::mutex>();
     StartParser(FLAGS_savings_path);
-    StartRetriever(FLAGS_currencies_path, FLAGS_script_path);
-    StartServer(FLAGS_address);
+    //StartRetriever(FLAGS_currencies_path, FLAGS_script_path);
+    StartServer(FLAGS_address + ":" + std::to_string(FLAGS_port));
 }
 
 void Application::StartParser(const std::string &file_path)
@@ -68,6 +69,7 @@ void Application::StartParser(const std::string &file_path)
             {
                 std::cout << "Updating data..." << std::endl;
                 parser_->ReadData();
+                std::cout<<"Data updated..."<<std::endl;
             }
 
             std::this_thread::sleep_for(5s);
@@ -85,12 +87,9 @@ void Application::StartServer(const std::string &address)
 
     std::cout << "Starting server..." << std::endl;
     server_ = builder.BuildAndStart();
-
     server_thread_ = std::thread([this, &builder]() {
         server_->Wait();
     });
-
-    int test = 3;
 }
 
 void Application::StartRetriever(const std::string &data_path,
@@ -99,35 +98,37 @@ void Application::StartRetriever(const std::string &data_path,
     currency_retriever_ = std::make_unique<CurrencyRetriever>(data_sync_.get(),
                                                               data_path,
                                                               script_path);
+                                                       
     currency_thread_ = std::thread([this]() {
         while (!currency_retriever_->Closing())
         {
             struct tm *tm_time = GetCurrentTime();
             using namespace std::chrono_literals;
             // check if weekend
-            if (tm_time->tm_wday > 5)
+            /*if (tm_time->tm_wday > 5)
             {
 
                 std::this_thread::sleep_for(24h);
-            }
+            }*/
 
-            if (tm_time->tm_hour < 13)
+            /*if (tm_time->tm_hour < 13)
             {
                 std::this_thread::sleep_for(1h);
-            }
+            }*/
 
             bool currency_retrieved = false;
             size_t fails = 0;
             while (!currency_retrieved)
             {
+                std::cout<<"Retrieving currency.." << std::endl;
                 currency_retrieved = currency_retriever_->RequestCurrency();
                 if (!currency_retrieved)
                 {
-                    std::this_thread::sleep_for(5min);
+                    std::this_thread::sleep_for(30s);
                     fails++;
                 }
 
-                if (fails > 20)
+                if (fails > 1)
                 {
                     std::cerr << "Could not retrieve currency on: "
                               << tm_time->tm_mday << "-" << tm_time->tm_mon
@@ -136,7 +137,8 @@ void Application::StartRetriever(const std::string &data_path,
                 }
             }
 
-            std::this_thread::sleep_for(24h - (fails * 5min));
+            //std::this_thread::sleep_for(24h - (fails * 5min));
+            std::this_thread::sleep_for(1min);
         }
     });
 }

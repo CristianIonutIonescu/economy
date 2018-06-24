@@ -3,6 +3,7 @@
 
 #include "../../common/date.hpp"
 
+#include <atomic>
 #include <map>
 #include <mutex>
 #include <string>
@@ -29,26 +30,25 @@ class CurrencyRetriever
     CurrencyRetriever(const CurrencyRetriever &) = delete;
     CurrencyRetriever operator=(const CurrencyRetriever &) = delete;
 
-    ~CurrencyRetriever() noexcept;
+    ~CurrencyRetriever() = default;
 
     bool RequestCurrency();
 
     Currency GetCurrency(CurrencyType type) const;
 
-    inline void Shutdown() noexcept { closing_ = true; }
+    inline void Shutdown() noexcept { stop_ = true; }
 
-    inline bool Closing() const noexcept { return closing_; }
+    inline bool Closing() const noexcept { return stop_; }
 
   private:
     void DigestData(const std::string &content);
     void LoadData();
-    void SaveData();
 
     std::string script_path_;
     std::string db_path_;
     std::map<economy::Date, CurrencyEntry> data_;
     std::mutex *data_lock_;
-    bool closing_;
+    std::atomic<bool> stop_;
 };
 }
 }

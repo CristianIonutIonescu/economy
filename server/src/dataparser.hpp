@@ -50,7 +50,7 @@ class DataParser
     time_t last_read_date_;
     std::map<economy::Date, float> data_;
     std::mutex *data_lock_;
-    bool stop_;
+    std::atomic<bool> stop_;
 };
 }
 }

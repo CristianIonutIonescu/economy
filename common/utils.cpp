@@ -39,29 +39,33 @@ std::string CurrencyTypeToString(const CurrencyType type)
 
 std::vector<std::string> ParseCSVLine(const std::string &line, const char sep)
 {
-    std::vector<std::string> content;
-    size_t prev_pos = 0;
-    while (true)
+    try
     {
-        size_t pos = line.find(sep, prev_pos);
-        if (pos == std::string::npos)
+        std::vector<std::string> content;
+        size_t prev_pos = 0;
+        while (true)
         {
-            std::string el = line.substr(prev_pos);
-            std::cout<<el<<std::endl;
+            size_t pos = line.find(sep, prev_pos);
+            if (pos == std::string::npos)
+            {
+                std::string el = line.substr(prev_pos);
+                content.push_back(el);
+                break;
+            }
+
+            std::string el = line.substr(prev_pos, pos - prev_pos);
             content.push_back(el);
-            break;
+            prev_pos = pos + 1;
+            return content;
         }
-
-        std::string el = line.substr(prev_pos, pos - prev_pos);
-        std::cout<<el<<std::endl;
-        content.push_back(el);
-        prev_pos = pos+1;
     }
-
-    return content;
+    catch (const std::exception &ex)
+    {
+        throw ex;
+    }
 }
 
-struct tm * GetCurrentTime()
+struct tm *GetCurrentTime()
 {
     std::chrono::time_point<std::chrono::system_clock> current_time;
     current_time = std::chrono::system_clock::now();

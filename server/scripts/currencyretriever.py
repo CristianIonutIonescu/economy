@@ -1,13 +1,9 @@
 import xmlschema
-#import requests
-from pprint import pprint
-xs = xmlschema.XMLSchema('./nbrfxrates.xsd')
+import requests
+xs = xmlschema.XMLSchema('./../resources/nbrfxrates.xsd')
 
-#response = requests.get('http://www.bnr.ro/nbrfxrates.xml')
-#fh = open('test.xml','w')
-#fh.write(response.content)
-#pprint (response.content)
+response = requests.get('http://www.bnr.ro/nbrfxrates.xml')
 
-currency = xs.to_dict('./test.xml')
+currency = xs.to_dict(response.content)
 content = str(currency['Body']['Cube'][0]['@date']) + ',' + str(float(currency['Body']['Cube'][0]['Rate'][10]['$'])) + ',' + str(float(currency['Body']['Cube'][0]['Rate'][28]['$']))
-pprint(content)
+print content
